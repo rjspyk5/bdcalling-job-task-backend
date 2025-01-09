@@ -3,6 +3,7 @@ const connectDb = require("./config/config");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userControllar = require("./controllar/userControllar");
+const categoryControllar = require("./controllar/categoryControllar");
 const app = express();
 const port = process.env.PORT ?? 3001;
 require("dotenv").config();
@@ -33,6 +34,13 @@ app.get("/api/v1/users", userControllar.getUser);
 app.post("/api/v1/users/register", userControllar.register);
 app.put("/api/v1/users/profile", userControllar.updateProfile);
 app.put("/api/v1/users/:id", userControllar.updateUser);
+
+// category related api
+app.get("/api/v1/category", categoryControllar.getCategory);
+app.get("/api/v1/category/:id", categoryControllar.getCategory);
+app.delete("/api/v1/category/:id", categoryControllar.deleteCategory);
+app.put("/api/v1/category/:id", categoryControllar.updateCategory);
+app.post("/api/v1/category", categoryControllar.createCategory);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);
