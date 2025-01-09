@@ -1,4 +1,4 @@
-const handleError = (er, res) => {
+const handleError = (err, res) => {
   if (err?.code === 11000) {
     return res.status(409).send({
       success: false,

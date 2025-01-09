@@ -3,13 +3,23 @@ const User = require("../model/userModel");
 
 module.exports = {
   getUser: async (req, res) => {
-    const data = req.body;
-    const page = req?.query?.page;
-    const limit = req?.query?.limit;
+    const page = req?.query?.page || 1;
+    const limit = req?.query?.limit || 10;
     const skip = (page - 1) * limit;
     try {
-      const result = await User.find().skip(skip).limit(limit);
-      console.log(result);
+      const result = await User.find()
+        .skip(skip)
+        .limit(limit)
+        .select("-password");
+
+      res.send({
+        success: true,
+        message: "Users retrieve successfully!",
+        data: {
+          meta: { page: page, limit: limit, total: result?.length },
+          data: result,
+        },
+      });
     } catch (error) {
       handleError(error, res);
     }
@@ -18,11 +28,19 @@ module.exports = {
     const data = req?.body;
     try {
       const result = await User.create(data);
-      console.log(result);
+      const finalResult = result.toObject();
+      delete finalResult.password;
+      delete finalResult.__v;
+      res.send({
+        success: true,
+        message: "User Registered successfully!",
+        data: { ...finalResult },
+      });
     } catch (error) {
       handleError(error, res);
     }
   },
+
   updateUser: async (req, res) => {
     const data = req?.body;
     const id = req?.params?.id;
