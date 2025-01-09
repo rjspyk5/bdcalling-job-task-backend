@@ -7,13 +7,18 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: [true, "Email is required"],
     },
-    email: { type: String, required: [true, "Email is required"] },
-    validate: {
-      validator: function (v) {
-        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+        },
+        message: "Invalid email format",
       },
-      message: "Invalid email format",
     },
+
     password: { type: String, required: [true, "Password is required"] },
     phoneNumber: { type: Number },
     profileImage: { type: String },
