@@ -31,8 +31,8 @@ app.get("/", (req, res) => {
 // user related routes
 app.get("/api/v1/users", userControllar.getUser);
 app.post("/api/v1/users/register", userControllar.register);
-app.put("api/v1/users/profile", userControllar.updateProfile);
-app.put("api/v1/users/:id", userControllar.updateUser);
+app.put("/api/v1/users/profile", userControllar.updateProfile);
+app.put("/api/v1/users/:id", userControllar.updateUser);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);

@@ -48,8 +48,12 @@ module.exports = {
       const result = await User.findByIdAndUpdate(id, data, {
         new: true,
         runValidators: true,
+      }).select("-password");
+      res.send({
+        success: true,
+        message: "User updated successfully!",
+        data: data,
       });
-      console.log(result);
     } catch (error) {
       handleError(error, res);
     }
@@ -61,8 +65,12 @@ module.exports = {
       const result = await User.findOneAndUpdate({ email: data?.email }, data, {
         new: true,
         runValidators: true,
+      }).select("-password");
+      res.send({
+        success: true,
+        message: "Profile updated successfully!",
+        data: data,
       });
-      console.log(result);
     } catch (error) {
       handleError(error, res);
     }
